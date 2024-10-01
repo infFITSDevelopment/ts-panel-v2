@@ -132,6 +132,7 @@
 
 .inf-panel-container #info-content {
   padding: 0 18px;
+  height: calc(70vh - 100px);
   height: calc(90lvh - 100px);
 }
 
