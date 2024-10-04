@@ -630,9 +630,7 @@
 
 .inf-panel-container #ai-content .iframe-container {
   width: 100%;
-  height: 700px; /* 固定 iframe 容器的高度 */
-  max-height: calc(90vh - 60px);
-  max-height: calc(90lvh - 60px);
+  height: 95vh;
   overflow-y: hidden; /* 隱藏 iframe 自身的滾動條 */
   display: none;
 }
@@ -645,6 +643,11 @@
 }
 
 @media (max-width: 991px) {
+.inf-panel-container #ai-content .iframe-container {
+  height: 700px; /* 固定 iframe 容器的高度 */
+  max-height: calc(90vh - 60px);
+  max-height: calc(90lvh - 60px);
+}
   .inf-panel-container #info-content {
     padding: 0 16px;
     max-height: calc(90vh - 60px);
