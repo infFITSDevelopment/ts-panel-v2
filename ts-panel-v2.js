@@ -61,8 +61,16 @@
   z-index: 99;
 }
 
-.inf-panel-container .btn-container {
-  margin: 0 15px;
+.inf-panel-container .fixed-panel-header{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px;
+  z-index: 999;
+}
+
+.inf-panel-container .toggle-btn-container {
   border-radius: 100px;
   border: 1px solid rgba(59, 59, 50, 0.18);
   background: rgba(255, 255, 255, 0.3);
@@ -132,8 +140,11 @@
 
 .inf-panel-container #info-content {
   padding: 0 18px;
-  max-height: calc(70vh - 100px);
-  max-height: calc(80lvh - 100px);
+  height: 100%;
+}
+
+.inf-panel-container #info-content #modalInfoAccordion{
+  padding-top: 65px;
 }
 
 .inf-panel-container .accordion-button.collapsed,
@@ -350,8 +361,10 @@
 }
 
 .inf-panel-container #panel-content.offcanvas-body {
-  padding: 18px 0;
+  // padding: 18px 0;
+  padding: 0;
   overflow-y: hidden;
+  position: relative;
 }
 
 .offcanvas-backdrop.show {
@@ -607,7 +620,7 @@
   -moz-border-radius: 8px;
   -ms-border-radius: 8px;
   -o-border-radius: 8px;
-  margin-top: 20px;
+  // margin-top: 20px;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -618,8 +631,8 @@
 .inf-panel-container #ai-content .iframe-container {
   width: 100%;
   height: 700px; /* 固定 iframe 容器的高度 */
-  max-height: calc(80vh - 100px);
-  max-height: calc(80lvh - 100px);
+  max-height: calc(85vh - 100px);
+  max-height: calc(85lvh - 100px);
   overflow-y: hidden; /* 隱藏 iframe 自身的滾動條 */
   display: none;
 }
@@ -634,6 +647,8 @@
 @media (max-width: 991px) {
   .inf-panel-container #info-content {
     padding: 0 16px;
+    max-height: calc(85vh - 100px);
+    max-height: calc(85lvh - 100px);
   }
   .inf-panel-container .offcanvas-bottom.main-modal,
   .inf-panel-container .offcanvas-end.main-modal {
@@ -656,9 +671,20 @@
       height: 550px;
   }
 }
-@media (max-width: 440px) {
-  .inf-panel-container #ai-content {
-    margin-top: 12px;
+@media (max-width: 360px) {
+.inf-panel-container .fixed-panel-header{
+    padding: 10px;
+  }
+  .inf-panel-container .toggle-btn-container {
+    gap: 8px;
+  }
+}
+@media (max-width: 320px) {
+.inf-panel-container .fixed-panel-header{
+    padding: 8px;
+  }
+.inf-panel-container .toggle-btn-container {
+    gap: 6px;
   }
 }
 
@@ -715,7 +741,8 @@
             ></button>
           </div>
           <div class="offcanvas-body small" id="panel-content">
-            <div class="d-flex justify-content-between btn-container">
+          <div class="fixed-panel-header">
+            <div class="d-flex justify-content-between toggle-btn-container">
               <button
                 id="guideBtn"
                 class="btn rounded-pill px-3 btn-white overlap-btn btn-active btn-custom-size"
@@ -730,6 +757,7 @@
               >
                 AI找尺寸
               </button>
+            </div>
             </div>
             <div class="modal-body py-0 overflow-auto" id="info-content">
               <!-- 手風琴折疊 -->
