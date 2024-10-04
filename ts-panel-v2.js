@@ -627,7 +627,9 @@
 .inf-panel-container #ai-content::-webkit-scrollbar {
   display: none;
 }
-
+.inf-panel-container #info-content {
+  max-height: 95vh;
+}
 .inf-panel-container #ai-content .iframe-container {
   width: 100%;
   height: 95vh;
