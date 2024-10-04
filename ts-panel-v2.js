@@ -670,7 +670,7 @@
     bottom: 58px;
   }
   .inf-panel-container #ai-content .iframe-container {
-      height: 550px;
+      // height: 600px;
   }
 }
 @media (max-width: 360px) {
@@ -1049,6 +1049,7 @@
   var isEdgeIOS = userAgent.includes("edgios");
   var isMobile = window.innerWidth < 992;
   var infoContent = $("#info-content");
+  var aiContent = $("#ai-content");
   var offcanvasBottom = $(".inf-panel-container .offcanvas.offcanvas-bottom");
   // FIXME
   if (isMobile) {
@@ -1056,6 +1057,7 @@
     offcanvasBottom.css("height", "fit-content");
     if (isEdgeIOS) {
       infoContent.css("max-height", "calc(90lvh - 20px)");
+      aiContent.css("max-height", "calc(90lvh - 20px)");
       offcanvasBottom.css("height", "fit-content");
     }
   }
