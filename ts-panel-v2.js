@@ -1055,7 +1055,7 @@
     // infoContent.css("max-height", "calc(80lvh - 20px)");
     offcanvasBottom.css("height", "fit-content");
     if (isEdgeIOS) {
-      // infoContent.css("max-height", "calc(85lvh - 20px)");
+      infoContent.css("max-height", "calc(90lvh - 20px)");
       offcanvasBottom.css("height", "fit-content");
     }
   }
