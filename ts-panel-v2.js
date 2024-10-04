@@ -631,8 +631,8 @@
 .inf-panel-container #ai-content .iframe-container {
   width: 100%;
   height: 700px; /* 固定 iframe 容器的高度 */
-  max-height: calc(90vh - 10px);
-  max-height: calc(90lvh - 10px);
+  max-height: calc(90vh - 60px);
+  max-height: calc(90lvh - 60px);
   overflow-y: hidden; /* 隱藏 iframe 自身的滾動條 */
   display: none;
 }
@@ -647,13 +647,13 @@
 @media (max-width: 991px) {
   .inf-panel-container #info-content {
     padding: 0 16px;
-    max-height: calc(90vh - 10px);
-    max-height: calc(90lvh - 10px);
+    max-height: calc(90vh - 60px);
+    max-height: calc(90lvh - 60px);
   }
 
   .inf-panel-container #ai-content {
-    max-height: calc(90vh - 10px);
-    max-height: calc(90lvh - 10px);
+    max-height: calc(90vh - 60px);
+    max-height: calc(90lvh - 60px);
   }
 
   .inf-panel-container .offcanvas-bottom.main-modal,
@@ -1053,13 +1053,13 @@
   var offcanvasBottom = $(".inf-panel-container .offcanvas.offcanvas-bottom");
   // FIXME
   if (isMobile) {
-    // infoContent.css("max-height", "calc(80lvh - 20px)");
-    offcanvasBottom.css("height", "calc(90lvh - 10px)");
+    // infoContent.css("max-height", "calc(80lvh - 60px)");
+    offcanvasBottom.css("height", "calc(90lvh - 60px)");
     if (isEdgeIOS) {
-      infoContent.css("max-height", "calc(90lvh - 20px)");
-      aiContent.css("max-height", "calc(90lvh - 20px)");
+      infoContent.css("max-height", "calc(90lvh - 10px)");
+      aiContent.css("max-height", "calc(90lvh - 10px)");
       // offcanvasBottom.css("height", "fit-content");
-      offcanvasBottom.css("height", "calc(90lvh - 20px)");
+      offcanvasBottom.css("height", "calc(90lvh - 10px)");
     }
   }
 
