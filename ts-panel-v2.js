@@ -247,20 +247,20 @@
   line-height: 18px;
 }
 
-.inf-panel-container .size-table thead th {
+.inf-panel-container .size-table--panel thead th {
   font-weight: 400;
   text-wrap: nowrap;
 }
 
-.inf-panel-container .size-table tr {
+.inf-panel-container .size-table--panel tr {
   display: block;
 }
 
-.inf-panel-container .size-table thead tr {
+.inf-panel-container .size-table--panel thead tr {
   border: none;
 }
 
-.inf-panel-container .size-table tbody tr {
+.inf-panel-container .size-table--panel tbody tr {
   margin-bottom: 6px;
 }
 
@@ -270,15 +270,15 @@
   padding: 12px 18px;
 }
 
-.inf-panel-container .size-table thead th {
+.inf-panel-container .size-table--panel thead th {
   position: sticky;
   /* background: #fff; */
   top: 0;
   z-index: 2; /* 保證表頭高於內容 */
 }
 
-.inf-panel-container .size-table tbody td:first-child,
-.inf-panel-container .size-table thead th:first-child {
+.inf-panel-container .size-table--panel tbody td:first-child,
+.inf-panel-container .size-table--panel thead th:first-child {
   position: sticky;
   left: 0;
   z-index: 99;
@@ -994,7 +994,7 @@
       isScrolling = this.scrollLeft > 0; // 判斷是否滾動
 
       document
-        .querySelectorAll(".size-table tbody td:first-child")
+        .querySelectorAll(".size-table--panel tbody td:first-child")
         .forEach(function (cell) {
           // 如果該行是選中的，不修改它的背景色
           if (cell.parentElement.classList.contains("selected")) {
@@ -1009,7 +1009,7 @@
         });
       // 同樣處理表頭
       document
-        .querySelectorAll(".size-table thead th:first-child")
+        .querySelectorAll(".size-table--panel thead th:first-child")
         .forEach(function (cell) {
           if (isScrolling) {
             cell.style.backgroundColor = "#eaeaea"; // 滾動時表頭背景色
@@ -1070,17 +1070,16 @@
 
   /* 取得資料 */
   function getPanelInfo() {
-    var Gender_ClothID = "M&INFS_20240507MT2749&U";
-    var ClothID_sizeinfo = "INFS_20240507MT2749";
-    var Brand = "INFS";
-    var SizeInfo;
-    var dataUrl =
+    var Gender_ClothID__panel = "M&INFS_20240507MT2749&U";
+    var ClothID_sizeinfo__panel = "INFS_20240507MT2749";
+    var Brand__panel = "INFS";
+    var dataUrlPanel =
       "https://etpbgcktrk.execute-api.ap-northeast-1.amazonaws.com/v0/model";
     $.ajax({
-      url: dataUrl,
+      url: dataUrlPanel,
       method: "GET",
       dataType: "text",
-      data: "ClothID=" + ClothID_sizeinfo + "&Brand=" + Brand,
+      data: "ClothID=" + ClothID_sizeinfo__panel + "&Brand=" + Brand__panel,
       crossDomain: true,
       async: true,
       success: (res) => {
@@ -1088,16 +1087,16 @@
         var response = JSON.parse(res);
         console.log("response", response);
 
-        var sizeInfoTable = createSizeInfoTable(JSON.parse(response.SizeInfo));
+        var sizeInfoTable = createSizeInfoTablePanel(JSON.parse(response.SizeInfo));
         console.log(sizeInfoTable);
         // $("#sizeInfo").html(sizeInfoTable);
         $("#modalSizeInfo").html(sizeInfoTable);
         //SVG
         if ("ChartInfo" in JSON.parse(res)) {
-          svg_display(JSON.parse(res));
+          svg_display_panel(JSON.parse(res));
         }
         if (
-          !Gender_ClothID.split("&")[1]
+          !Gender_ClothID__panel.split("&")[1]
             .split("_")[1]
             .match(/[A-Z]+/)[0]
             .includes("A")
@@ -1118,10 +1117,10 @@
     });
   }
   /* 建立尺寸表 */
-  function createSizeInfoTable(sizeInfo) {
+  function createSizeInfoTablePanel(sizeInfo) {
     var headers = Object.keys(sizeInfo[0]);
 
-    var table = '<table class="size-table"><thead><tr>';
+    var table = '<table class="size-table--panel"><thead><tr>';
     headers.forEach(function (header) {
       table += "<th>" + header + "</th>";
     });
@@ -1142,7 +1141,7 @@
       console.log("選中的尺寸：", selectedSize);
       // 在這裡可以添加更多處理選中尺寸的邏輯
       document
-        .querySelectorAll(".size-table tbody td:first-child")
+        .querySelectorAll(".size-table--panel tbody td:first-child")
         .forEach(function (cell) {
           if (isScrolling) {
             cell.style.backgroundColor = "#fff";
@@ -1154,7 +1153,7 @@
         });
       $(this).addClass("selected").siblings().removeClass("selected");
       document
-        .querySelectorAll(".size-table tbody td:first-child")
+        .querySelectorAll(".size-table--panel tbody td:first-child")
         .forEach(function (cell) {
           console.log("this", this);
 
@@ -1339,7 +1338,7 @@
         row_qty_TR++;
       }
     }
-    function displaytable_TR(Avatar, table, showChest) {
+    function displaytable_TR_panel(Avatar, table, showChest) {
       var trs = table.rows,
         trl = trs.length,
         i = 0,
@@ -1364,7 +1363,7 @@
       });
       console.log(ResortAvatar);
       // console.log(JSON.parse(Avatar))
-      function FitP_translater(string) {
+      function FitP_translater_panel(string) {
         if (string == "Tight") output = "緊身";
         else if (string == "Fit") output = "合身";
         else if (string == "Great") output = "適中";
@@ -1406,7 +1405,7 @@
               if (typeof ResortAvatar[i - 1][keys[j]] == "undefined") {
                 trs[i].children[j].innerText = "-";
               } else {
-                trs[i].children[j].innerText = FitP_translater(
+                trs[i].children[j].innerText = FitP_translater_panel(
                   ResortAvatar[i - 1][keys[j]]
                 );
               }
@@ -1415,7 +1414,7 @@
         }
       }
     }
-    function checkChest(Avatar) {
+    function checkChestPanel(Avatar) {
       var trl = JSON.parse(Avatar).length,
         showChest = true;
       for (i = 0; i < trl; i++) {
@@ -1486,7 +1485,7 @@
       });
     }
 
-    var showChest = checkChest(TRcontent);
+    var showChest = checkChestPanel(TRcontent);
     if (showChest) {
       col_qty_TR = 6;
       morerow_TRPanel(
@@ -1511,7 +1510,7 @@
       );
     }
 
-    displaytable_TR(
+    displaytable_TR_panel(
       [
         ...height_group150down_panel,
         ...height_group150_panel,
@@ -1530,11 +1529,11 @@
   }
 
   //SVG Display
-  function svg_display(json_res) {
-    function resize_svg(data, Labels) {
+  function svg_display_panel(json_res) {
+    function resize_svg_panel(data, Labels) {
       const svgContainerPanel = document.getElementById("svgContainerPanel");
       const squaresize = document.getElementById("svgContainerPanel").offsetWidth;
-      function derive_svg_circum(svg_data, a, b, centerX, centerY) {
+      function derive_svg_circum_panel(svg_data, a, b, centerX, centerY) {
         // 定义椭圆和直线的属性
         //let a = 150; // 椭圆的长轴半径
         //let b = 30;  // 椭圆的短轴半径
@@ -1551,7 +1550,7 @@
         return svg_data;
         //return svg_dat
       }
-      function derive_svg_line(svg_data, x1, y1, x2, y2) {
+      function derive_svg_line_panel(svg_data, x1, y1, x2, y2) {
         m = 0; // m : margin
         if (y1 == y2) {
           y1_m = y1;
@@ -1587,7 +1586,7 @@
         svg_data += svg_dat;
         return svg_data;
       }
-      function derive_svg_exline(svg_data, x1, y1, x2, y2, p, direction) {
+      function derive_svg_exline_panel(svg_data, x1, y1, x2, y2, p, direction) {
         o_p = 15; // o_p is coounter-overshoot length, p is extend length
         if (direction == "Y") {
           x1_p = x1;
@@ -1624,7 +1623,7 @@
         svg_data += svg_dat;
         return svg_data;
       }
-      function derive_svg_exline_sl(svg_data, x1, y1, x2, y2, p1, p2, angle) {
+      function derive_svg_exline_panel_sl(svg_data, x1, y1, x2, y2, p1, p2, angle) {
         // Calculate the unit direction vector of the original line
         // let dx = x2 - x1;
         // let dy = y2 - y1;
@@ -1681,19 +1680,19 @@
           // {
           //     if(data[Labels[l]].id=="shirt_longsleeve")
           //     {
-          //         svg_data = derive_svg_exline_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2/1.95 * squaresize, angle)
-          //         svg_data = derive_svg_line(svg_data, x1*1.45 * squaresize, y1 * squaresize, x2*1.195 * squaresize, y2 * squaresize) // gen line // 直线的起始和结束坐标  //[item.sizeRequired ? item.size : '']
+          //         svg_data = derive_svg_exline_panel_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2/1.95 * squaresize, angle)
+          //         svg_data = derive_svg_line_panel(svg_data, x1*1.45 * squaresize, y1 * squaresize, x2*1.195 * squaresize, y2 * squaresize) // gen line // 直线的起始和结束坐标  //[item.sizeRequired ? item.size : '']
           //     }
           //     else
           //     {
-          //         svg_data = derive_svg_exline_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2 * squaresize, angle)
-          //         svg_data = derive_svg_line(svg_data, x1*1.075 * squaresize, y1/1.55 * squaresize, x2*1.055 * squaresize, y2/1.35 * squaresize) // gen line // 直线的起始和结束坐标  //[item.sizeRequired ? item.size : '']
+          //         svg_data = derive_svg_exline_panel_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2 * squaresize, angle)
+          //         svg_data = derive_svg_line_panel(svg_data, x1*1.075 * squaresize, y1/1.55 * squaresize, x2*1.055 * squaresize, y2/1.35 * squaresize) // gen line // 直线的起始和结束坐标  //[item.sizeRequired ? item.size : '']
           //     }
 
           // }
           // else{
-          // svg_data = derive_svg_exline_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2 * squaresize, angle)
-          svg_data = derive_svg_line(
+          // svg_data = derive_svg_exline_panel_sl(svg_data, x1 * squaresize, y1 * squaresize, x2 * squaresize, y2 * squaresize, p1 * squaresize, p2 * squaresize, angle)
+          svg_data = derive_svg_line_panel(
             svg_data,
             x1 * squaresize,
             y1 * squaresize,
@@ -1744,7 +1743,7 @@
           let Y = data[Labels[l]].param.Y;
           let avg_x = (parseFloat(X) + parseFloat(X)) / 2;
           let avg_y = (parseFloat(Y) + parseFloat(Y)) / 2;
-          svg_data = derive_svg_circum(
+          svg_data = derive_svg_circum_panel(
             svg_data,
             a * squaresize,
             b * squaresize,
@@ -1784,7 +1783,7 @@
           let y2 = data[Labels[l]].param.y2;
           let avg_x = (parseFloat(x1) + parseFloat(x2)) / 2;
           if (data[Labels[l]].linename_id != "ChestWidth") {
-            svg_data = derive_svg_exline(
+            svg_data = derive_svg_exline_panel(
               svg_data,
               x1 * squaresize,
               y1 * squaresize,
@@ -1794,7 +1793,7 @@
               (direction = "-Y")
             );
           }
-          svg_data = derive_svg_line(
+          svg_data = derive_svg_line_panel(
             svg_data,
             x1 * squaresize,
             y1 * squaresize,
@@ -1834,7 +1833,7 @@
           let y2 = data[Labels[l]].param.y2;
           let p = data[Labels[l]].param.p;
           if (data[Labels[l]].linename_id == "ShoulderWidth") {
-            svg_data = derive_svg_exline(
+            svg_data = derive_svg_exline_panel(
               svg_data,
               x1 * squaresize,
               y1 * 1.6 * squaresize,
@@ -1844,7 +1843,7 @@
               (direction = "-Y")
             );
 
-            svg_data = derive_svg_line(
+            svg_data = derive_svg_line_panel(
               svg_data,
               x1 * squaresize,
               y1 * squaresize,
@@ -1852,7 +1851,7 @@
               y2 * squaresize
             ); // gen line // 直线的起始和结束坐标
           } else {
-            svg_data = derive_svg_exline(
+            svg_data = derive_svg_exline_panel(
               svg_data,
               x1 * squaresize,
               y1 * squaresize,
@@ -1861,7 +1860,7 @@
               p * squaresize,
               (direction = "-Y")
             );
-            svg_data = derive_svg_line(
+            svg_data = derive_svg_line_panel(
               svg_data,
               x1 * squaresize,
               y1 * squaresize,
@@ -1903,7 +1902,7 @@
         }
       }
 
-      //透過API取值呈現內容  derive_svg_circum/derive_svg_line/derive_svg_exline_sl
+      //透過API取值呈現內容  derive_svg_circum_panel/derive_svg_line_panel/derive_svg_exline_panel_sl
 
       const svgStructure =
         `<svg width="` +
@@ -1952,7 +1951,7 @@
       $("#svg_unit--panel").find("span").text("cm(±2)");
     else $("#svg_unit--panel").find("span").text("英吋inch(±2)");
 
-    function mapMeasurement(input) {
+    function mapMeasurementPanel(input) {
       const measurementGroups = {
         ChestWidth: ["胸寬", "衣寬", "身寬"],
         ChestCircum: ["胸圍", "衣圍", "上胸圍"],
@@ -2015,7 +2014,7 @@
         let dataname_list = $(".size-btn-wrapper").data("labels").split(",");
         for (let gs = 1; gs < Object.keys(global_sizeinfo[0]).length; gs++) {
           let size_header = Object.keys(global_sizeinfo[0])[gs];
-          let mappedMeasurement = mapMeasurement(size_header);
+          let mappedMeasurement = mapMeasurementPanel(size_header);
           if (
             dataname_list.includes(mappedMeasurement) &&
             output_svg.data &&
@@ -2028,7 +2027,7 @@
         }
 
         if (output_svg && output_svg.data) {
-          output_svg = resize_svg(output_svg.data, output_svg.Labels);
+          output_svg = resize_svg_panel(output_svg.data, output_svg.Labels);
           $("#svgContainerPanel").find("text").hide().fadeIn();
           console.log(output_svg, "!!!!!!!!!!!!!!!!!!");
         }
@@ -2049,13 +2048,13 @@
       //   let dataname_list = $('.size-btn-wrapper').data('labels').split(',')
       //   for (let gs = 1; gs < Object.keys(global_sizeinfo[0]).length; gs++) {
       //       let size_header = Object.keys(global_sizeinfo[0])[gs]
-      //       if (dataname_list.includes(mapMeasurement(size_header))) {
-      //           output_svg.data[mapMeasurement(size_header)].value = global_sizeinfo[activeIndex][size_header];
+      //       if (dataname_list.includes(mapMeasurementPanel(size_header))) {
+      //           output_svg.data[mapMeasurementPanel(size_header)].value = global_sizeinfo[activeIndex][size_header];
       //       }
       //   }
 
       //   //show_svg
-      //   output_svg = resize_svg(output_svg.data, output_svg.Labels);
+      //   output_svg = resize_svg_panel(output_svg.data, output_svg.Labels);
       //   $('#svgContainerPanel').find('text').hide().fadeIn()
       //   console.log(output_svg, "!!!!!!!!!!!!!!!!!!");
       //   var sizeGuide = $(".container").html();
