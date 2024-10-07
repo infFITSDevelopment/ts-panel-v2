@@ -145,6 +145,7 @@
 
 .inf-panel-container #info-content #modalInfoAccordion{
   padding-top: 65px;
+  padding-bottom: 12px;
 }
 
 .inf-panel-container .accordion-button.collapsed,
