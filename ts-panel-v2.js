@@ -434,7 +434,7 @@
   display: none;
 }
 
-.inf-panel-container #modalFilterInfo .filter-container {
+.inf-panel-container #modalFilterInfo .filter-container--panel {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: start;
@@ -446,7 +446,7 @@
   -ms-overflow-style: none;
 }
 
-.inf-panel-container #modalFilterInfo .filter-container::-webkit-scrollbar {
+.inf-panel-container #modalFilterInfo .filter-container--panel::-webkit-scrollbar {
   display: none;
 }
 
@@ -824,8 +824,8 @@
                     <div class="accordion-body">
                       <div id="modalFilterInfo">
                         <!-- 試穿資訊內容將由JavaScript動態填充 -->
-                        <div class="filter-container">
-                          <div class="filter-btn-container"></div>
+                        <div class="filter-container--panel">
+                          <div class="filter-btn-container--panel"></div>
                         </div>
                         <div id="TryonTable-container--panel">
                           <table id="TryonTable--panel">
@@ -863,7 +863,7 @@
                         <!-- 商品屬性內容將由JavaScript動態填充 -->
                         <table>
                           <tr>
-                            <th class="properties-header" name="Elasticity">
+                            <th class="properties-header--panel" name="Elasticity">
                               彈性
                             </th>
                             <td><span>無彈</span></td>
@@ -871,13 +871,13 @@
                             <td><span>超彈</span></td>
                           </tr>
                           <tr>
-                            <th class="properties-header" name="Cut">版型</th>
+                            <th class="properties-header--panel" name="Cut">版型</th>
                             <td><span>合身</span></td>
                             <td><span>適中</span></td>
                             <td><span>寬鬆</span></td>
                           </tr>
                           <tr>
-                            <th class="properties-header" name="Thickness">
+                            <th class="properties-header--panel" name="Thickness">
                               厚度
                             </th>
                             <td><span>輕薄</span></td>
@@ -885,7 +885,7 @@
                             <td><span>厚實</span></td>
                           </tr>
                           <tr>
-                            <th class="properties-header" name="Materials">
+                            <th class="properties-header--panel" name="Materials">
                               材質
                             </th>
                             <td
@@ -894,7 +894,7 @@
                             ></td>
                           </tr>
                           <tr>
-                            <th class="properties-header" name="Lining">
+                            <th class="properties-header--panel" name="Lining">
                               內襯
                             </th>
                             <td colspan="3" style="text-align: center">
@@ -935,7 +935,7 @@
                       outline: none;
                       z-index: 14;
                     "
-                    src="https://inffits.com/webDesign/HTML/js/iframe/indexwebiframe_CA_tw_cftsoul.html?MF&CFTSOUL_20231130MT4428&U"
+                    src="https://inffits.com/webDesign/HTML/js/iframe/indexwebiframe_CA_tw_wss.html?MF&WSS_20230928MT0928129&U"
                   ></iframe>
                 </div>
               </div>
@@ -1107,7 +1107,7 @@
         }
         // 商品屬性
         if ("AttributeInfo" in JSON.parse(res)) {
-          clothes_attributes_display(JSON.parse(res));
+          clothes_attributes_display_panel(JSON.parse(res));
         }
 
         $("#guideBtn").click();
@@ -1426,59 +1426,52 @@
       return showChest;
     }
 
-    function group_by_height(TRcontent) {
-      for (i = 0; i < JSON.parse(TRcontent).length; i++) {
-        if (JSON.parse(TRcontent)[i]["Height"] <= 150) {
-          height_group150down.push(JSON.parse(TRcontent)[i]);
-        } else if (
-          JSON.parse(TRcontent)[i]["Height"] <= 160 &&
-          JSON.parse(TRcontent)[i]["Height"] >= 150
-        ) {
-          height_group150.push(JSON.parse(TRcontent)[i]);
-        } else if (
-          JSON.parse(TRcontent)[i]["Height"] <= 170 &&
-          JSON.parse(TRcontent)[i]["Height"] >= 160
-        ) {
-          height_group160.push(JSON.parse(TRcontent)[i]);
-        } else if (
-          JSON.parse(TRcontent)[i]["Height"] >= 170 &&
-          JSON.parse(TRcontent)[i]["Height"] <= 180
-        ) {
-          height_group170.push(JSON.parse(TRcontent)[i]);
-        } else if (JSON.parse(TRcontent)[i]["Height"] >= 180) {
-          height_group180up.push(JSON.parse(TRcontent)[i]);
+    function group_by_height_panel(TRcontent) {
+      for(i=0;i<JSON.parse(TRcontent).length;i++){
+        if(JSON.parse(TRcontent)[i]['Height']<=150){
+            height_group150down_panel.push(JSON.parse(TRcontent)[i])
         }
-      }
+        else if(JSON.parse(TRcontent)[i]['Height']<=160 && JSON.parse(TRcontent)[i]['Height']>=150){
+            height_group150_panel.push(JSON.parse(TRcontent)[i])
+        }else if(JSON.parse(TRcontent)[i]['Height']<=170 && JSON.parse(TRcontent)[i]['Height']>=160){
+            height_group160_panel.push(JSON.parse(TRcontent)[i])
+        }else if(JSON.parse(TRcontent)[i]['Height']>=170 && JSON.parse(TRcontent)[i]['Height']<=180){
+            height_group170_panel.push(JSON.parse(TRcontent)[i])
+        }
+        else if(JSON.parse(TRcontent)[i]['Height']>=180){
+            height_group180up_panel.push(JSON.parse(TRcontent)[i])
+        }
     }
-    var height_group150down = [];
-    var height_group150 = [];
-    var height_group160 = [];
-    var height_group170 = [];
-    var height_group180up = [];
-
-    group_by_height(TRcontent);
-    const filterBtnContainer = $(".filter-btn-container");
-    if (height_group150down.length) {
+  }
+    var height_group150down_panel = [];
+    var height_group150_panel = [];
+    var height_group160_panel = [];
+    var height_group170_panel = [];
+    var height_group180up_panel = [];
+  console.log('height_group150_panel', height_group150_panel)
+    group_by_height_panel(TRcontent);
+    const filterBtnContainer = $(".filter-btn-container--panel");
+    if (height_group150down_panel.length) {
       filterBtnContainer.append(
         `<button class="filter-button--panel active" data-height="150d">150 down</button>`
       );
     }
-    if (height_group150.length) {
+    if (height_group150_panel.length) {
       filterBtnContainer.append(
         `<button class="filter-button--panel" data-height="150">150 ~ 160</button>`
       );
     }
-    if (height_group160.length) {
+    if (height_group160_panel.length) {
       filterBtnContainer.append(
         `<button class="filter-button--panel" data-height="160">160 ~ 170</button>`
       );
     }
-    if (height_group170.length) {
+    if (height_group170_panel.length) {
       filterBtnContainer.append(
         `<button class="filter-button--panel" data-height="170">170 ~ 180</button>`
       );
     }
-    if (height_group180up.length) {
+    if (height_group180up_panel.length) {
       filterBtnContainer.append(
         `<button class="filter-button--panel" data-height="180u">180 up</button>`
       );
@@ -1499,32 +1492,32 @@
       morerow_TRPanel(
         Object.keys(JSON.parse(TRcontent)).length,
         ["人員", "身高", "體重", "尺寸", "胸圍", "試穿偏好"],
-        height_group150down.length,
-        height_group150.length,
-        height_group160.length,
-        height_group170.length,
-        height_group180up.length
+        height_group150down_panel.length,
+        height_group150_panel.length,
+        height_group160_panel.length,
+        height_group170_panel.length,
+        height_group180up_panel.length
       );
     } else {
       col_qty_TR = 5;
       morerow_TRPanel(
         Object.keys(JSON.parse(TRcontent)).length,
         ["人員", "身高", "體重", "尺寸", "試穿偏好"],
-        height_group150down.length,
-        height_group150.length,
-        height_group160.length,
-        height_group170.length,
-        height_group180up.length
+        height_group150down_panel.length,
+        height_group150_panel.length,
+        height_group160_panel.length,
+        height_group170_panel.length,
+        height_group180up_panel.length
       );
     }
 
     displaytable_TR(
       [
-        ...height_group150down,
-        ...height_group150,
-        ...height_group160,
-        ...height_group170,
-        ...height_group180up,
+        ...height_group150down_panel,
+        ...height_group150_panel,
+        ...height_group160_panel,
+        ...height_group170_panel,
+        ...height_group180up_panel,
       ],
       document.getElementById("TryonTable--panel"),
       showChest
@@ -2146,7 +2139,7 @@
   }
 
   //Attribute Display
-  function clothes_attributes_display(json_res) {
+  function clothes_attributes_display_panel(json_res) {
     let global_attributeinfo = json_res.AttributeInfo;
     //     <div class="card-header" style='z-index:1;position:relative'>
     //     <h4 class="cloattr-header-title">商品屬性</h4>
@@ -2163,29 +2156,29 @@
     //       <div class="table-container" id="attributeContent">
     //       <table>
     //           <tr>
-    //               <th class="properties-header" name="Elasticity">彈性</th>
+    //               <th class="properties-header--panel" name="Elasticity">彈性</th>
     //               <td>無彈</td>
     //               <td>適中</td>
     //               <td>超彈</td>
     //           </tr>
     //           <tr>
-    //               <th class="properties-header" name="Cut">版型</th>
+    //               <th class="properties-header--panel" name="Cut">版型</th>
     //               <td>合身</td>
     //               <td>適中</td>
     //               <td>寬鬆</td>
     //           </tr>
     //           <tr>
-    //               <th class="properties-header" name="Thickness">厚度</th>
+    //               <th class="properties-header--panel" name="Thickness">厚度</th>
     //               <td>輕薄</td>
     //               <td>適中</td>
     //               <td>厚實</td>
     //           </tr>
     //           <tr>
-    //               <th class="properties-header" name="Materials">材質</th>
+    //               <th class="properties-header--panel" name="Materials">材質</th>
     //               <td colspan="3" style="color:black;font-weight:400;"></td>
     //           </tr>
     //           <tr>
-    //               <th class="properties-header" name="Lining">內襯</th>
+    //               <th class="properties-header--panel" name="Lining">內襯</th>
     //               <td colspan="3" style="text-align: center;"><span class="checkmark"><img src="https://inffits.com/webDesign/HTML/img/002-checked-symbol.png" width=18px></span></td>
     //           </tr>
     //       </table>
@@ -2196,7 +2189,7 @@
     // );
 
     for (let ca in json_res.AttributeInfo) {
-      $(".properties-header").each(function (idx, i) {
+      $(".properties-header--panel").each(function (idx, i) {
         if ($(i).attr("name") == ca && ca !== "Lining") {
           $(i)
             .siblings()
@@ -2219,7 +2212,7 @@
     }
     for (let M = 0; M < json_res.AttributeInfo.Materials.length; M++) {
       console.log(json_res.AttributeInfo.Materials[M]);
-      $('.properties-header[name="Materials"]')
+      $('.properties-header--panel[name="Materials"]')
         .siblings()
         .append(json_res.AttributeInfo.Materials[M].split("(")[0] + " ");
     }
@@ -2231,48 +2224,20 @@
   }
 
   window.filterTablePanel = function (heightRange, button) {
-    const table = document.getElementById("TryonTable--panel");
-    const rows = table.querySelectorAll(`tr:not(:first-child)`); // Select all rows except the first one
-    const buttons = document.querySelectorAll(".filter-button--panel"); // Use querySelectorAll for better performance
+    var table, rows, i;
+    table = document.getElementById("TryonTable--panel");
+    rows = table.getElementsByTagName("tr");
 
-    rows.forEach((row) => {
-      row.style.display = row.classList.contains(heightRange) ? "" : "none"; // Use conditional operator for better readability and performance
-    });
-
-    buttons.forEach((btn) => {
-      btn.classList.remove("active"); // Remove active class from all buttons
-    });
-
-    button.classList.add("active"); // Add active class to the selected button
-  };
-
-  function group_by_height(TRcontent) {
-    for (i = 0; i < JSON.parse(TRcontent).length; i++) {
-      if (JSON.parse(TRcontent)[i]["Height"] <= 150) {
-        height_group150down.push(JSON.parse(TRcontent)[i]);
-      } else if (
-        JSON.parse(TRcontent)[i]["Height"] <= 160 &&
-        JSON.parse(TRcontent)[i]["Height"] >= 150
-      ) {
-        height_group150.push(JSON.parse(TRcontent)[i]);
-      } else if (
-        JSON.parse(TRcontent)[i]["Height"] <= 170 &&
-        JSON.parse(TRcontent)[i]["Height"] >= 160
-      ) {
-        height_group160.push(JSON.parse(TRcontent)[i]);
-      } else if (
-        JSON.parse(TRcontent)[i]["Height"] >= 170 &&
-        JSON.parse(TRcontent)[i]["Height"] <= 180
-      ) {
-        height_group170.push(JSON.parse(TRcontent)[i]);
-      } else if (JSON.parse(TRcontent)[i]["Height"] >= 180) {
-        height_group180up.push(JSON.parse(TRcontent)[i]);
-      }
+    for (i = 1; i < rows.length; i++) {
+        rows[i].style.display = "none"; // hide all rows
+        if (rows[i].classList.contains(heightRange)) {
+            rows[i].style.display = ""; // show only rows that match the filter
+        }
     }
-  }
-  var height_group150down = [];
-  var height_group150 = [];
-  var height_group160 = [];
-  var height_group170 = [];
-  var height_group180up = [];
+    var buttons = document.getElementsByClassName('filter-button--panel');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+    }
+    button.classList.add('active');
+  };
 })(jQuery);
