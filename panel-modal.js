@@ -374,6 +374,7 @@
 
 .panelOffcanvas-backdrop.show {
   opacity: 1 !important;
+  z-index: 999;
   background-color: rgba(0, 0, 0, 0.3) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
@@ -969,7 +970,7 @@
       </div>
     </div>
   `;
-  document.body.insertAdjacentHTML("beforeend", panelTemplate);
+  document.body.insertAdjacentHTML("afterbegin", panelTemplate);
   $(function () {
     console.log("DOM is ready");
     // Fetch the Bootstrap CSS from CDN
