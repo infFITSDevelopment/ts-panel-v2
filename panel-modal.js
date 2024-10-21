@@ -1,4 +1,10 @@
 ;(function ($) {
+  // 檢查是否為觸控設備
+  var isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  // 定義觸發的事件
+  var eventType = isTouchDevice ? "touchstart" : "click";
+  var response = "";
   // 動態添加 Google 字體連結
   var googleFontLink = document.createElement("link");
   googleFontLink.rel = "preconnect";
@@ -39,13 +45,72 @@
   --light-background-color: rgba(245, 245, 245, 1);
   --light-primary-color: rgba(255, 255, 255, 0.5);
 }
+@font-face
+    font-family: custom-sans-serif
+    src: local("Heiti TC"), local("微軟正黑體"), local("Microsoft JhengHei")
+    unicode-range: U+4E00-9FFF
 
+@font-face
+    font-family: custom-sans-serif
+    src: local(Helvetica), local(Segoe UI)
+    unicode-range: U+00-024F
+
+.custom-sans-serif{
+    font-family: custom-sans-serif
+}
 .inf-panel-container {
   display: none;
 }
 
 /* modal trigger button */
+.trigger-icon--text{
+  box-sizing: border-box;
+  font-family:"Chocolate Classical Sans", sans-serif;
+  color: #F3F3EF;
+  opacity: 0.9;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.78px;
+  overflow-wrap: break-word;
+}
+#panelTagBtn.trigger-icon--shirt{
+position: fixed; right: 0px; top: calc(50vh - 88.5px);
+display: flex;
+padding: 11px 10px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+width:40px;
+gap: 4px;
+box-sizing: border-box;
+border-radius: 13px 0px 0px 13px;
+background:  #1E1E19;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='110' viewBox='0 0 40 110' fill='none'%3E%3Cpath d='M0 0H40V110H0V0Z' fill='%231E1E19'/%3E%3Cpath d='M0 0H40V110H0V0Z' fill='black' fill-opacity='0.1'/%3E%3C/svg%3E");
+background-size: cover;
+background-position:center;
+background-repeat: no-repeat;
+box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+  font-family: "Chocolate Classical Sans", sans-serif;
+  z-index:1000000000; cursor: pointer
+  ; transition:background 300ms ease-out;opacity 0.3s ease-out; opacity: 1; pointer-events: auto; font-weight: 400; left: auto;
+  
+}
+  #panelTagBtn.trigger-icon--shirt:hover{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='110' viewBox='0 0 40 110' fill='none'%3E%3Cg clip-path='url(%23clip0_403_4114)'%3E%3Cpath d='M51.5 5L-8 52.5' stroke='white' stroke-opacity='0.07' stroke-width='10'/%3E%3Cpath opacity='0.07' d='M53.5 65L-8 113' stroke='%23F3F3EF' stroke-width='3'/%3E%3Cpath opacity='0.07' d='M58.5 43L-8 94.5' stroke='%23F3F3EF' stroke-width='14'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_403_4114'%3E%3Cpath d='M0 13C0 5.8203 5.8203 0 13 0H40V110H13C5.8203 110 0 104.18 0 97V13Z' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+    background-repeat: no-repeat;
+  }
+  #panelTagBtn.trigger-icon--shirt:hover #svg-shirt,
+  #panelTagBtn.trigger-icon--shirt:hover span{
+    opacity: 1;
+  }
+
 .inf-panel-container .btn.btn-light.trigger-icon--shirt {
+  display: none;
   position: fixed;
   bottom: 18px;
   right: 18px;
@@ -340,6 +405,7 @@
   max-width: 100vw;
   width: 400px;
   height: 95vh;
+  max-height: 700px;
   margin: 0px;
   padding: 20px;
   z-index: 1050;
@@ -392,6 +458,9 @@
   -ms-border-radius: 21px;
   -o-border-radius: 21px;
 }
+  .inf-panel-container .panelOffcanvas-bottom.main-modal{
+    background: rgba(255, 255, 255, 1);
+  }
 
 .inf-panel-container #svg_size--panel,
 .inf-panel-container #svg_unit--panel {
@@ -519,12 +588,17 @@
 .inf-panel-container #modalAttributeInfo table {
   width: 100%;
   border-collapse: collapse;
-  overflow: hidden;
+  // overflow-x: scroll;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+}
+.inf-panel-container #modalAttributeInfo tbody th:first-child{
+  position: sticky;
+  left: 0;
+  z-index: 99;
 }
 
 .inf-panel-container #modalAttributeInfo th,
@@ -549,6 +623,7 @@
 
 .inf-panel-container #modalAttributeInfo td > span {
   text-align: center;
+  white-space: nowrap;
   width: -moz-fit-content;
   width: fit-content;
   box-sizing: border-box;
@@ -556,7 +631,9 @@
   font-weight: 400;
   color: rgb(144, 144, 144);
 }
-
+.inf-panel-container #modalAttributeInfo{
+  overflow-x: scroll;
+}
 .inf-panel-container #modalAttributeInfo td.active > span {
   border-radius: 20px;
   -webkit-border-radius: 20px;
@@ -598,6 +675,7 @@
 }
 
 .inf-panel-container #ai-content {
+  overflow-x: hidden;
   overflow-y: auto;
   border-radius: 21px;
   -webkit-border-radius: 8px;
@@ -612,13 +690,175 @@
   display: none;
 }
 
+#intro-content {
+  overflow: hidden;
+  border-radius: 21px;
+  background-color: #fff;
+  // position: fixed;
+  // margin: auto;
+  // left: 0;
+  // right: 0;
+  // top: 0;
+  // bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 700px;
+  width:100%;
+  position: relative;
+  height:calc(90lvh - 60px);
+}
+@media screen and (min-width: 768px){
+  height: 95vh;
+  border-radius: 28px;
+}
+#intro-content #intro-bg{
+  height: 0;
+  padding: 0; /* remove any pre-existing padding, just in case */
+  padding-bottom: 85%; /* for a 4:3 aspect ratio */
+  background-image: url(https://raw.githubusercontent.com/infFITSDevelopment/pop-ad/refs/heads/main/panel-intro.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+
+}
+#intro-content #intro-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align:left;
+  width:100%;
+  padding: 0 16px;
+  gap: 9px;
+  padding-top: 24px;
+}
+@media screen and (min-width: 768px){
+#intro-content #intro-section{
+  gap: 11px;
+  padding: 0 18px;
+  padding-top: 36px;
+}
+}
+
+#intro-content #intro-section div{
+  width:100%;
+}
+#intro-content #intro-section .intro-tag{
+  color: #1E1E19;
+  font-family: "Chocolate Classical Sans";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px; /* 115.385% */
+  letter-spacing: 0.52px;
+  opacity: 0.7;
+}
+@media screen and (min-width: 768px){
+  #intro-content #intro-section .intro-tag{
+    font-size: 15px;
+    line-height: 18px; /* 120% */
+    letter-spacing: 0.6px;
+  }
+}
+#intro-content #intro-section .intro-title{
+  color: #1E1E19;
+  font-family: "Noto Sans TC", "Chocolate Classical Sans", "Figtree";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 26px; /* 123.81% */
+  letter-spacing: 0.63px;
+}
+@media screen and (min-width: 768px){
+  #intro-content #intro-section .intro-title{
+    font-size: 24px;
+    line-height: 34px; /* 141.667% */
+    letter-spacing: 0.48px;
+  }
+  #intro-content #intro-section .intro-title.en{
+    font-family: "Figtree";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 34px;
+  }
+}
+#intro-content #intro-section .intro-desc{
+  color: #1E1E19;
+  font-family: "Chocolate Classical Sans";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px; /* 120% */
+  letter-spacing: 0.6px;
+  opacity: 0.7;
+}
+@media screen and (min-width: 768px){
+  #intro-content #intro-section .intro-desc{
+    font-size: 16px;
+    line-height: 19px; /* 118.75% */
+    letter-spacing: 0.64px;
+  }
+}
+
+#intro-content #intro-footer{
+  margin-top: auto;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap:12px;
+}
+
+@media screen and (min-width: 768px){
+#intro-content #intro-footer{
+  flex-direction: column;
+  padding: 18px;
+}
+#intro-content #intro-footer .intro-btn--secondary{
+  order:2;
+}
+}
+
+#intro-content #intro-footer .intro-btn{
+  display: flex;
+  width:100%;
+  height: 40px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border:none;
+  border-radius: 10px;
+  text-align: center;
+  font-family: Figtree;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px; /* 113.333% */
+  opacity: 0.9;
+}
+  #intro-content #intro-footer .intro-btn:hover{
+    opacity: 1;
+  }
+
+#intro-content #intro-footer .intro-btn--primary{
+    background-color: rgba(30, 30, 25, 0.85);
+    color: #FFF;
+
+}
+#intro-content #intro-footer .intro-btn--secondary{
+   background-color: #F3F3EF;
+   color: #1E1E19;
+}
+
 .inf-panel-container #info-content {
-  max-height: 95vh;
+  max-height: 700px;
 }
 
 .inf-panel-container #ai-content .iframe-container {
   width: 100%;
   height: 95vh;
+  max-height: 700px;
   overflow-y: hidden; /* 隱藏 iframe 自身的滾動條 */
   display: none;
 }
@@ -680,7 +920,7 @@
   position: fixed;
   width: 95vw;
   max-width: 400px;
-  max-height: 95vh;
+  max-height: 700px;
   z-index: 1050;
   top: 0;
   right: 0;
@@ -725,11 +965,23 @@
     transform: translateX(110%);
   }
 }/*# sourceMappingURL=index.css.map */
-  `
+  `;
   document.head.appendChild(customCSS);
 
   // 添加 html template
   var panelTemplate = `
+<div id="panelTagBtn" class="trigger-icon--shirt" style="">
+<svg xmlns="http://www.w3.org/2000/svg" style="box-sizing:border-box" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <g id="svg-shirt" opacity="0.9">
+    <path d="M10.0001 3.75C11.2923 3.75 12.3716 2.74297 12.5001 1.48438C12.5118 1.36719 12.3829 1.25 12.2657 1.25C12.2024 1.25006 12.1396 1.26199 12.0806 1.28516C12.0728 1.28828 11.2564 1.60156 10.0001 1.60156C8.74385 1.60156 7.92588 1.28906 7.91963 1.28516C7.85306 1.262 7.78309 1.25011 7.7126 1.25H7.71026C7.68106 1.25155 7.65245 1.25884 7.62607 1.27147C7.59969 1.28409 7.57606 1.3018 7.55654 1.32357C7.53702 1.34534 7.52198 1.37076 7.5123 1.39835C7.50261 1.42594 7.49847 1.45518 7.5001 1.48438C7.63096 2.74063 8.71104 3.75 10.0001 3.75Z" fill="#F3F3EF"/>
+    <path d="M18.9565 3.51165L13.9061 1.74368C13.8845 1.73613 13.8615 1.73343 13.8387 1.73577C13.8159 1.73811 13.794 1.74542 13.7743 1.7572C13.7547 1.76897 13.7379 1.78493 13.7251 1.80392C13.7123 1.82291 13.7038 1.84449 13.7003 1.86711C13.5542 2.74253 13.1023 3.53775 12.425 4.11134C11.7477 4.68494 10.889 4.99972 10.0015 4.99972C9.11393 4.99972 8.25517 4.68494 7.5779 4.11134C6.90062 3.53775 6.44875 2.74253 6.30263 1.86711C6.2992 1.84411 6.29068 1.82216 6.27769 1.80287C6.2647 1.78358 6.24757 1.76743 6.22755 1.7556C6.20752 1.74377 6.18511 1.73657 6.16194 1.7345C6.13878 1.73244 6.11544 1.73557 6.09364 1.74368L1.04325 3.51165C0.901896 3.56113 0.783008 3.65973 0.708232 3.78949C0.633456 3.91926 0.607763 4.07156 0.635831 4.21868L1.28544 7.65618C1.31044 7.7872 1.3767 7.90679 1.47454 7.99745C1.57237 8.08812 1.69665 8.14511 1.82919 8.16008L3.73857 8.37571C3.81651 8.3845 3.8883 8.42227 3.93967 8.48154C3.99105 8.54081 4.01827 8.61723 4.01591 8.69563L3.72958 18.1058C3.72579 18.2271 3.75738 18.3468 3.8205 18.4505C3.88362 18.5541 3.97554 18.6371 4.08505 18.6894C4.17608 18.7305 4.27501 18.7512 4.37489 18.7499H15.6249C15.7248 18.7512 15.8237 18.7305 15.9147 18.6894C16.0242 18.6371 16.1162 18.5541 16.1793 18.4505C16.2424 18.3468 16.274 18.2271 16.2702 18.1058L15.9839 8.69563C15.9815 8.61723 16.0087 8.54081 16.0601 8.48154C16.1115 8.42227 16.1833 8.3845 16.2612 8.37571L18.1706 8.16008C18.3031 8.14511 18.4274 8.08812 18.5252 7.99745C18.6231 7.90679 18.6893 7.7872 18.7143 7.65618L19.364 4.21868C19.392 4.07156 19.3663 3.91926 19.2916 3.78949C19.2168 3.65973 19.0979 3.56113 18.9565 3.51165Z" fill="#F3F3EF"/>
+    <path d="M9.625 8.6C9.625 8.44087 9.69085 8.28826 9.80806 8.17574C9.92527 8.06321 10.0842 8 10.25 8C10.4158 8 10.5747 8.06321 10.6919 8.17574C10.8092 8.28826 10.875 8.44087 10.875 8.6C10.875 8.75913 10.8092 8.91174 10.6919 9.02426C10.5747 9.13679 10.4158 9.2 10.25 9.2C10.0842 9.2 9.92527 9.13679 9.80806 9.02426C9.69085 8.91174 9.625 8.75913 9.625 8.6ZM9 10.4C9 10.1788 9.1862 10 9.41667 10H10.25C10.4805 10 10.6667 10.1788 10.6667 10.4V13.2H11.0833C11.3138 13.2 11.5 13.3787 11.5 13.6C11.5 13.8212 11.3138 14 11.0833 14H9.41667C9.1862 14 9 13.8212 9 13.6C9 13.3787 9.1862 13.2 9.41667 13.2H9.83333V10.8H9.41667C9.1862 10.8 9 10.6213 9 10.4Z" fill="#1E1E19" stroke="#1E1E19" stroke-width="0.25"/>
+  </g>
+</svg>
+<span class="trigger-icon--text">
+  智能尺寸
+</span>
+</div>
       <div class="panelOffcanvas-backdrop"></div>
       <div class="inf-panel-container relative">
       <div class="relative">
@@ -749,14 +1001,15 @@
           id="panelOffcanvasBottomPanel"
         >
           <div
+            class="btn-close-container"
             style="
               position: absolute;
               top: -8px;
               right: -8px;
               background: #fff;
               border-radius: 50%;
-              width: 21px;
-              height: 21px;
+              width: 24px;
+              height: 24px;
               display: flex;
               justify-content: center;
               align-items: center;
@@ -768,7 +1021,7 @@
               type="button"
               class="btn-close btn-close--panel"
               aria-label="Close"
-              style="font-size: 8px; color: #3b3b32"
+              style="font-size: 12px; color: #3b3b32"
             ></button>
           </div>
           <div class="panelOffcanvas-body small" id="panel-content">
@@ -789,6 +1042,18 @@
                 AI找尺寸
               </button>
             </div>
+            </div>
+            <div class="modal-body py-0" id="intro-content">
+                <div id="intro-bg"></div>
+                <div id="intro-section">
+                  <div class="intro-tag">智能尺寸</div>
+                  <div class="intro-title">使用 <span class="en" lang="en">infFITS AI</span> 找尋合適的尺寸，智慧精準購物。</div>
+                  <div class="intro-desc">全面了解商品特徵，選取最佳尺寸。</div>
+                </div>
+                 <div id="intro-footer">
+                    <button class="intro-btn intro-btn--secondary">立即了解商品</button>
+                    <button class="intro-btn intro-btn--primary">找尋合適尺寸</button>
+                  </div>
             </div>
             <div class="modal-body py-0 overflow-auto" id="info-content">
               <!-- 手風琴折疊 -->
@@ -1023,7 +1288,8 @@
         .querySelectorAll(".size-table--panel thead th:first-child")
         .forEach(function (cell) {
           if (isScrolling) {
-            cell.style.backgroundColor = "#eaeaea"; // 滾動時表頭背景色
+            // cell.style.backgroundColor = "#eaeaea"; // 滾動時表頭背景色
+            cell.style.backgroundColor = "#fff"; // 滾動時表頭背景色
           } else {
             cell.style.backgroundColor = "transparent"; // 未滾動時移除表頭背景色
           }
@@ -1088,14 +1354,11 @@
       async: true,
       success: (res) => {
         console.log("res", JSON.parse(res));
-        var response = JSON.parse(res);
-        console.log("response", response);
+        response = JSON.parse(res);
 
         var sizeInfoTable = createSizeInfoTablePanel(
           JSON.parse(response.SizeInfo)
         );
-        console.log(sizeInfoTable);
-        // $("#sizeInfo").html(sizeInfoTable);
         $("#modalSizeInfo").html(sizeInfoTable);
         //SVG
         if ("ChartInfo" in JSON.parse(res)) {
@@ -1115,7 +1378,8 @@
           clothes_attributes_display_panel(JSON.parse(res));
         }
 
-        $("#guideBtn").click();
+        $("#AIbtn").click();
+        showIntroPanel();
       },
       error: (err) => {
         console.log(err);
@@ -1180,19 +1444,17 @@
     return table;
   }
 
-  $(".trigger-icon--shirt").on("pointerdown", function () {
+  $("#panelTagBtn.trigger-icon--shirt").on("click", function () {
     $(".panelOffcanvas").removeClass("slide-out").addClass("slide-in").show();
-    $("#svgContainerPanel").show();
-    $(".size-btn--panel")[0].click();
     if (window.innerWidth < 768) {
       $(".panelOffcanvas-backdrop").addClass("show");
       document.body.style.overflow = "hidden";
     }
-    $(".trigger-icon--shirt").hide();
+    $("#panelTagBtn.trigger-icon--shirt").hide();
   });
-  $(".btn-close--panel").on("pointerdown", function () {
+  $(".btn-close--panel").on(eventType, function () {
     $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
-    $(".trigger-icon--shirt").fadeIn();
+    $("#panelTagBtn.trigger-icon--shirt").fadeIn();
     if (window.innerWidth < 768) {
       $(".panelOffcanvas-backdrop").removeClass("show");
       document.body.style.overflow = "";
@@ -1203,7 +1465,28 @@
     }, 500);
   });
 
-  $("#guideBtn").click(function () {
+  if (isTouchDevice) {
+    $("#guideBtn").on("touchstart", function (event) {
+      event.preventDefault(); // 防止雙次觸發
+      $(this).trigger("click"); // 手動觸發 click 事件
+    });
+    $("#AIbtn").on("touchstart", function (event) {
+      event.preventDefault(); // 防止雙次觸發
+      $(this).trigger("click"); // 手動觸發 click 事件
+    });
+    $(".accordion-button").on("touchstart", function (event) {
+      event.preventDefault(); // 防止雙次觸發
+      $(this).trigger("click"); // 手動觸發 click 事件
+    });
+  }
+  function showIntroPanel() {
+    $(".btn-close-container").hide();
+    $(".fixed-panel-header").hide();
+    $("#info-content.modal-body").hide();
+    $("#ai-content.modal-body").hide();
+    $("#intro-content.modal-body").show();
+  }
+  $("#guideBtn").on("click", function () {
     $("#guideBtn").removeClass("btn-white");
     $("#guideBtn").addClass("btn-active");
 
@@ -1212,9 +1495,15 @@
     $("#ai-content.modal-body").hide();
     $("#info-content.modal-body").show();
     $(".iframe-container").hide();
+    $("#svgContainerPanel").show();
+    if ($(".size-btn--panel.selected.active").length > 0) {
+      $(".size-btn--panel.selected.active").click();
+    } else {
+      $(".size-btn--panel")[0].click();
+    }
   });
 
-  $("#AIbtn").click(function () {
+  $("#AIbtn").on("click", function () {
     $(".iframe-container").show();
     $("#AIbtn").removeClass("btn-white");
     $("#AIbtn").addClass("btn-active");
@@ -1227,6 +1516,37 @@
       .show()
       .scrollTop($("#ai-content.modal-body").height(), { behavior: "smooth" });
   });
+
+  $(".accordion-button").on("click", function () {
+    const targetId = $(this).data("bs-target");
+    const $target = $(targetId);
+    console.log("%target", $target);
+
+    // 確保目標元素已經展開後再滾動
+    $target.on("shown.bs.collapse", function () {
+      // 滾動至目標元素
+      $(".modal-body").animate(
+        {
+          scrollTop: $target.offset().top,
+        },
+        800
+      );
+    });
+  });
+
+$(".intro-btn--primary").on(eventType, function () {
+  $("#intro-content.modal-body").hide();
+  $(".fixed-panel-header").show();
+  $(".btn-close-container").show();
+  $("#AIbtn").click()
+})
+
+$(".intro-btn--secondary").on(eventType, function () {
+  $("#intro-content.modal-body").hide();
+  $(".fixed-panel-header").show();
+  $(".btn-close-container").show();
+  $("#guideBtn").click()
+})
 
   //TryonReport Display
   var row_qty_TR = 0;
@@ -1511,15 +1831,9 @@
         `<button class="filter-button--panel" data-height="180u">180 up</button>`
       );
     }
-    if ("ontouchstart" in window) {
-      $(".filter-button--panel").on("touchstart", function () {
-        filterTablePanel($(this).data("height"), this);
-      });
-    } else {
-      $(".filter-button--panel").on("click", function () {
-        filterTablePanel($(this).data("height"), this);
-      });
-    }
+    $(".filter-button--panel").on(eventType, function () {
+      filterTablePanel($(this).data("height"), this);
+    });
 
     var showChest = checkChestPanel(TRcontent);
     if (showChest) {
