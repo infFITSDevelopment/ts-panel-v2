@@ -1012,13 +1012,13 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
               right: -8px;
               background: #fff;
               border-radius: 50%;
-              width: 24px;
-              height: 24px;
+              width: 28px;
+              height: 28px;
               display: flex;
               justify-content: center;
               align-items: center;
               box-shadow: 0px 0px 0.5px 0px rgba(0, 0, 0, 0.25) inset;
-              z-index: 99999;
+              z-index: 9999999;
             "
           >
             <button
