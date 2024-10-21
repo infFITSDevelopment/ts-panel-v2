@@ -876,6 +876,10 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     max-height: calc(90vh - 60px);
     max-height: calc(90lvh - 60px);
   }
+  .inf-panel-container #intro-content {
+    max-height: calc(90vh - 60px);
+    max-height: calc(90lvh - 60px);
+    }
   .inf-panel-container #info-content {
     padding: 0 16px;
     max-height: calc(90vh - 60px);
