@@ -1540,12 +1540,14 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       if ($target.attr("id").includes("filterInfoCollapse")) {
         const filterInfoCollapse = document.querySelector("#filterInfoCollapse");
         filterInfoCollapse.scrollIntoView({
+          behavior: "smooth",
           block: "nearest",
         });
       }
       if ($target.attr("id").includes("attributeInfoCollapse")) {
         const attributeInfoCollapse = document.querySelector("#attributeInfoCollapse");
         attributeInfoCollapse.scrollIntoView({
+          behavior: "smooth",
           block: "nearest",
         });
       }
@@ -1851,9 +1853,11 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }
     $(".filter-button--panel").on(eventType, function () {
       filterTablePanel($(this).data("height"), this);
-      const filterBtnEl = document.querySelector(".filter-button--panel");
+      const filterBtnEl = document.querySelector(".filter-button--panel.active");
+      console.log('filterBtnEl', filterBtnEl)
       filterBtnEl.scrollIntoView({
-        block: "nearest",
+        behavior: "smooth",
+        block: "start",
       });
     });
 
@@ -2413,9 +2417,11 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           $("#svgContainerPanel").find("text").hide().fadeIn();
           console.log(output_svg, "!!!!!!!!!!!!!!!!!!");
         }
-        const sizeBtnEl = document.querySelector(".size-btn--panel");
+        const sizeBtnEl = document.querySelector(".size-btn--panel.active");
+        console.log('sizeBtnEl', sizeBtnEl)
         sizeBtnEl.scrollIntoView({
-          block: "nearest",
+          behavior: "smooth",
+          block: "end",
         });
         // var sizeGuide = $(".container").html();
         // $(".modal-body").html(sizeGuide);
