@@ -1536,17 +1536,15 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         } else {
           $(".size-btn--panel")[0].click();
         }
+        $("#info-content.modal-body").animate(
+          {
+            scrollTop: $target.position().top + $("#info-content.modal-body").scrollTop(), // 計算目標元素的相對偏移
+          },
+          500 // 滾動持續時間（毫秒）
+        );
+    }else{
+      $("#info-content.modal-body").scrollTop($("#info-content.modal-body").height(), { behavior: "smooth" });
     }
-      // 滾動至目標元素
-      const modalBody = $(".modal-body");
-      const targetOffset = $target.position().top + modalBody.scrollTop(); // 相對於 modal-body 的偏移量
-      
-      modalBody.animate(
-        {
-          scrollTop: targetOffset,
-        },
-        500
-      );
     });
   });
 
