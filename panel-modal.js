@@ -617,7 +617,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 }
 
 .inf-panel-container #modalAttributeInfo .checkmark {
-  font-size: 18px;
+  // font-size: 18px;
   color: black !important;
 }
 
@@ -1192,10 +1192,9 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
                             </th>
                             <td colspan="3" style="text-align: center">
                               <span class="checkmark"
-                                ><img
-                                  src="https://inffits.com/webDesign/HTML/img/002-checked-symbol.png"
-                                  width="18px"
-                              /></span>
+                                >
+                                有
+                              </span>
                             </td>
                           </tr>
                         </table>
@@ -1528,12 +1527,25 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
     // 確保目標元素已經展開後再滾動
     $target.on("shown.bs.collapse", function () {
+      if ($target.attr("id").includes("sizeInfoCollapse")) {
+        // 你的邏輯代碼
+        console.log("The target's ID contains 'sizeInfoCollapse'");
+        $("#svgContainerPanel").show();
+        if ($(".size-btn--panel.selected.active").length > 0) {
+          $(".size-btn--panel.selected.active").click();
+        } else {
+          $(".size-btn--panel")[0].click();
+        }
+    }
       // 滾動至目標元素
-      $(".modal-body").animate(
+      const modalBody = $(".modal-body");
+      const targetOffset = $target.position().top + modalBody.scrollTop(); // 相對於 modal-body 的偏移量
+      
+      modalBody.animate(
         {
-          scrollTop: $target.offset().top,
+          scrollTop: targetOffset,
         },
-        800
+        500
       );
     });
   });
@@ -2567,8 +2579,9 @@ $(".intro-btn--secondary").on(eventType, function () {
             });
         } else if ($(i).attr("name") == ca && ca === "Lining") {
           if (json_res.AttributeInfo[ca] === "無") {
-            $(i).next().children()[0].innerHTML =
-              '<img src="https://inffits.com/webDesign/HTML/img/cross-mark-on-a-black-circle-background.png" width=18px>';
+            $(i).next().children()[0].innerText = json_res.AttributeInfo[ca]
+            // $(i).next().children()[0].innerHTML =
+            //   '<img src="https://inffits.com/webDesign/HTML/img/cross-mark-on-a-black-circle-background.png" width=18px>';
           }
         }
       });
