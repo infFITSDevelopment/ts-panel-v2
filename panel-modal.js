@@ -1048,6 +1048,28 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
             </div>
             </div>
             <div class="modal-body py-0" id="intro-content">
+                  <div
+                  class="close-intro-container"
+            style="
+              position: absolute;
+              top: 8px;
+              left: 8px;
+              border-radius: 50%;
+              width: 24px;
+              height: 24px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 9999999;
+            "
+          >
+            <button
+              type="button"
+              class="btn-close btn-close--intro"
+              aria-label="Close"
+              style="font-size: 12px; color: #3b3b32"
+            ></button>
+          </div>
                 <div id="intro-bg"></div>
                 <div id="intro-section">
                   <div class="intro-tag">智能尺寸</div>
@@ -1456,6 +1478,20 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     $("#panelTagBtn.trigger-icon--shirt").hide();
   });
   $(".btn-close--panel").on(eventType, function () {
+    $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
+    $("#panelTagBtn.trigger-icon--shirt").fadeIn();
+    if (window.innerWidth < 768) {
+      $(".panelOffcanvas-backdrop").removeClass("show");
+      document.body.style.overflow = "";
+    }
+    // 在動畫結束後隱藏元素
+    setTimeout(function () {
+      $(".panelOffcanvas").hide();
+    }, 500);
+  });
+
+
+  $(".btn-close--intro").on(eventType, function () {
     $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
     $("#panelTagBtn.trigger-icon--shirt").fadeIn();
     if (window.innerWidth < 768) {
