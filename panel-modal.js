@@ -1851,6 +1851,10 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }
     $(".filter-button--panel").on(eventType, function () {
       filterTablePanel($(this).data("height"), this);
+      const filterBtnEl = document.querySelector(".filter-button--panel");
+      filterBtnEl.scrollIntoView({
+        block: "nearest",
+      });
     });
 
     var showChest = checkChestPanel(TRcontent);
@@ -2409,7 +2413,10 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           $("#svgContainerPanel").find("text").hide().fadeIn();
           console.log(output_svg, "!!!!!!!!!!!!!!!!!!");
         }
-
+        const sizeBtnEl = document.querySelector(".size-btn--panel");
+        sizeBtnEl.scrollIntoView({
+          block: "nearest",
+        });
         // var sizeGuide = $(".container").html();
         // $(".modal-body").html(sizeGuide);
       });
