@@ -859,7 +859,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   width: 100%;
   height: 95vh;
   max-height: 700px;
-  overflow-y: hidden; /* 隱藏 iframe 自身的滾動條 */
+  overflow: hidden; /* 隱藏 iframe 自身的滾動條 */
   display: none;
 }
 
@@ -1207,7 +1207,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
             </div>
             <div class="modal-body py-0" id="ai-content">
               <div class="iframe-container">
-              <div id="inffits_cblock">
+              <div id="inffits_cblock" style="width:100.1%">
                 <div
                   id="ctryon"
                   style="
