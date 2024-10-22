@@ -425,7 +425,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
 .inf-panel-container #panel-content.panelOffcanvas-body {
   padding: 0;
-  overflow-y: hidden;
+  overflow: hidden;
   position: relative;
 }
 
@@ -703,7 +703,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   display: flex;
   flex-direction: column;
   max-height: 700px;
-  width:100%;
+  width:100.1%;
   position: relative;
   height:calc(90lvh - 60px);
 }
