@@ -1536,29 +1536,35 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         } else {
           $(".size-btn--panel")[0].click();
         }
-        $("#info-content.modal-body").scrollTo({
-          top: 85,
-          behavior: "smooth"
+      }
+      if ($target.attr("id").includes("filterInfoCollapse")) {
+        const filterInfoCollapse = document.querySelector("#filterInfoCollapse");
+        filterInfoCollapse.scrollIntoView({
+          block: "nearest",
         });
-    }else{
-      $("#info-content.modal-body").scrollTop($("#info-content.modal-body").height(), { behavior: "smooth" });
-    }
+      }
+      if ($target.attr("id").includes("attributeInfoCollapse")) {
+        const attributeInfoCollapse = document.querySelector("#attributeInfoCollapse");
+        attributeInfoCollapse.scrollIntoView({
+          block: "nearest",
+        });
+      }
     });
   });
 
-$(".intro-btn--primary").on(eventType, function () {
-  $("#intro-content.modal-body").hide();
-  $(".fixed-panel-header").show();
-  $(".btn-close-container").show();
-  $("#AIbtn").click()
-})
+  $(".intro-btn--primary").on(eventType, function () {
+    $("#intro-content.modal-body").hide();
+    $(".fixed-panel-header").show();
+    $(".btn-close-container").show();
+    $("#AIbtn").click();
+  });
 
-$(".intro-btn--secondary").on(eventType, function () {
-  $("#intro-content.modal-body").hide();
-  $(".fixed-panel-header").show();
-  $(".btn-close-container").show();
-  $("#guideBtn").click()
-})
+  $(".intro-btn--secondary").on(eventType, function () {
+    $("#intro-content.modal-body").hide();
+    $(".fixed-panel-header").show();
+    $(".btn-close-container").show();
+    $("#guideBtn").click();
+  });
 
   //TryonReport Display
   var row_qty_TR = 0;
@@ -2575,7 +2581,7 @@ $(".intro-btn--secondary").on(eventType, function () {
             });
         } else if ($(i).attr("name") == ca && ca === "Lining") {
           if (json_res.AttributeInfo[ca] === "無") {
-            $(i).next().children()[0].innerText = json_res.AttributeInfo[ca]
+            $(i).next().children()[0].innerText = json_res.AttributeInfo[ca];
             // $(i).next().children()[0].innerHTML =
             //   '<img src="https://inffits.com/webDesign/HTML/img/cross-mark-on-a-black-circle-background.png" width=18px>';
           }
