@@ -704,7 +704,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   display: flex;
   flex-direction: column;
   max-height: 700px;
-  width:100.1%;
+  width:101%;
   position: relative;
   height:calc(90lvh - 60px);
 }
@@ -1229,7 +1229,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
             </div>
             <div class="modal-body py-0" id="ai-content">
               <div class="iframe-container">
-              <div id="inffits_cblock" style="width:100.1%">
+              <div id="inffits_cblock" style="width:101%">
                 <div
                   id="ctryon"
                   style="
