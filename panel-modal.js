@@ -1955,11 +1955,11 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }
     $(".filter-button--panel").on(eventType, function () {
       filterTablePanel($(this).data("height"), this);
-      const filterInfoCollapse = document.querySelector("#filterInfoCollapse");
-      filterInfoCollapse.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      // const filterInfoCollapse = document.querySelector("#filterInfoCollapse");
+      // filterInfoCollapse.scrollIntoView({
+      //   behavior: "smooth",
+      //   block: "start",
+      // });
     });
 
     var showChest = checkChestPanel(TRcontent);
