@@ -868,7 +868,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
 #inffits_cblock,
 #ctryon,
-#inffits_tryon_window {
+#inffits_ctryon_window {
   width: 100%;
   height: 100%;
 }
@@ -1243,7 +1243,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
                   "
                 >
                   <iframe
-                    id="inffits_ctryon_window inffits_tryon_window"
+                    id="inffits_ctryon_window"
                     style="
                       width: 100%;
                       height: 100%;
@@ -1450,7 +1450,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         $("#modalSizeInfo").html(sizeInfoTable);
 
          //EVENT & MESSAGE
-         document.getElementById('inffits_ctryon_window inffits_tryon_window').setAttribute('src', 'https://inffits.com/webDesign/HTML/js/iframe/indexwebiframe_CA_tw_' + Brand__panel.toLowerCase() + '.html?' + Gender_ClothID__panel)
+         document.getElementById('inffits_ctryon_window').setAttribute('src', 'https://inffits.com/webDesign/HTML/js/iframe/indexwebiframe_CA_tw_' + Brand__panel.toLowerCase() + '.html?' + Gender_ClothID__panel)
 
          var SizeAIFast_switch = false
          window.addEventListener('message', function (event) {
@@ -1459,7 +1459,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
              var member_id = "";
              var given_id = "";
              var lgiven_id = "";
-             var tryonwindow = document.getElementById("inffits_ctryon_window inffits_tryon_window").contentWindow;
+             var tryonwindow = document.getElementById("inffits_ctryon_window").contentWindow;
  
              //avoid always got
              var chklog1 = '"currentUser\\"';
@@ -1518,7 +1518,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
              IDRxGet(member_id, given_id, tryonwindow, lgiven_id, test, SizeAIFast_switch);
  
              //Flow Adjustment
-             document.getElementById("inffits_ctryon_window inffits_tryon_window").contentWindow.postMessage({ MsgHeader: "RemoveWaistFlow" }, "*");
+             document.getElementById("inffits_ctryon_window").contentWindow.postMessage({ MsgHeader: "RemoveWaistFlow" }, "*");
  
  
            }
