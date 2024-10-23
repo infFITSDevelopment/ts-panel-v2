@@ -1448,6 +1448,89 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           JSON.parse(response.SizeInfo)
         );
         $("#modalSizeInfo").html(sizeInfoTable);
+
+         //EVENT & MESSAGE
+         document.getElementById('inffits_ctryon_window').setAttribute('src', 'https://inffits.com/webDesign/HTML/js/iframe/indexwebiframe_CA_tw_' + Brand__panel.toLowerCase() + '.html?' + Gender_ClothID__panel)
+
+         var SizeAIFast_switch = false
+         window.addEventListener('message', function (event) {
+           if (event.data["MsgHeader"] == "IDRxReady") {
+ 
+             var member_id = "";
+             var given_id = "";
+             var lgiven_id = "";
+             var tryonwindow = document.getElementById("inffits_ctryon_window").contentWindow;
+ 
+             //avoid always got
+             var chklog1 = '"currentUser\\"';
+             var chklog2 = ':null';
+             //document.documentElement.innerHTML.includes('"currentUser\\":null')
+ 
+             //member_id
+             if (!document.documentElement.innerHTML.includes(chklog1 + chklog2)) {
+               if (document.documentElement.innerHTML.split('href="/users/')[1].split('",')[0].split('/edit"')[0].length < 30) {
+                 member_id = document.documentElement.innerHTML.split('href="/users/')[1].split('",')[0].split('/edit"')[0];
+               }
+               else member_id = "";
+             }
+ 
+             // Always Generate a pair of GVID
+             gvid_exist = false;
+             try {
+               if (typeof localStorage["GVID"] !== 'undefined') {
+                 gvid_exist = true;
+               }
+               else {
+                 gvid_exist = false;
+               }
+             }
+             catch (e) {
+               gvid_exist = false;
+             }
+             if (gvid_exist) {
+               given_id = localStorage["GVID"];
+             }
+             else {
+               given_id = makeid(20);
+               localStorage.setItem("GVID", given_id);
+             }
+             // Always Generate a pair of LGVID
+             lgvid_exist = false;
+             try {
+               if (typeof localStorage["LGVID"] !== 'undefined') {
+                 lgvid_exist = true;
+               }
+               else {
+                 lgvid_exist = false;
+               }
+             }
+             catch (e) {
+               lgvid_exist = false;
+             }
+             if (lgvid_exist) {
+               lgiven_id = localStorage["LGVID"];
+             }
+             else {
+               lgiven_id = makeid(20);
+               localStorage.setItem("LGVID", lgiven_id);
+             }
+ 
+             IDRxGet(member_id, given_id, tryonwindow, lgiven_id, test, SizeAIFast_switch);
+ 
+             //Flow Adjustment
+             document.getElementById("inffits_ctryon_window").contentWindow.postMessage({ MsgHeader: "RemoveWaistFlow" }, "*");
+ 
+ 
+           }
+           else if (event.data["MsgHeader"] == "AddtoCart") {
+ 
+             RecomText = event.data['Size'];
+             Message_AddtoCartold(true);
+             $('.btn-close').click();
+ 
+           }
+         }, false);
+
         //SVG
         if ("ChartInfo" in JSON.parse(res)) {
           svg_display_panel(JSON.parse(res));
