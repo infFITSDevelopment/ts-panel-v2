@@ -2487,7 +2487,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         const start = element.scrollTop;
         const change = to - start;
         const startTime = performance.now();
-
+        document.addEventListener('touchmove', preventDefault, { passive: false });
         function animateScroll(currentTime) {
           const timeElapsed = currentTime - startTime;
           const progress = Math.min(timeElapsed / duration, 1);
@@ -2500,6 +2500,8 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
           if (timeElapsed < duration) {
             requestAnimationFrame(animateScroll);
+          }else{
+            document.removeEventListener('touchmove', preventDefault);
           }
         }
 
