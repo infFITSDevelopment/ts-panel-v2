@@ -709,8 +709,10 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   height:calc(90lvh - 60px);
 }
 @media screen and (min-width: 768px){
+#intro-content {
   height: 95vh;
   border-radius: 28px;
+}
 }
 #intro-content #intro-bg{
   height: 0;
@@ -1425,9 +1427,9 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   }
   /* 取得資料 */
   function getPanelInfo(Gender_ClothID) {
-    var Gender_ClothID__panel = Gender_ClothID
-    var ClothID_sizeinfo__panel = Gender_ClothID__panel.split('&')[1];
-    var Brand__panel = Gender_ClothID__panel.split('&')[1].split('_')[0];
+    var Gender_ClothID__panel = Gender_ClothID;
+    var ClothID_sizeinfo__panel = Gender_ClothID__panel.split("&")[1];
+    var Brand__panel = Gender_ClothID__panel.split("&")[1].split("_")[0];
 
     var dataUrlPanel =
       "https://etpbgcktrk.execute-api.ap-northeast-1.amazonaws.com/v0/model";
@@ -1435,7 +1437,8 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       url: dataUrlPanel,
       method: "GET",
       dataType: "text",
-      data: "ClothID=" + ClothID_sizeinfo__panel + "&Brand=" + Brand__panel,      crossDomain: true,
+      data: "ClothID=" + ClothID_sizeinfo__panel + "&Brand=" + Brand__panel,
+      crossDomain: true,
       async: true,
       success: (res) => {
         console.log("res", JSON.parse(res));
@@ -2480,6 +2483,29 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       // //       console.log('size_active', size_active)
       // //       alert('I am' + size_active);
       // // });
+      function smoothScroll(element, to, duration) {
+        const start = element.scrollTop;
+        const change = to - start;
+        const startTime = performance.now();
+
+        function animateScroll(currentTime) {
+          const timeElapsed = currentTime - startTime;
+          const progress = Math.min(timeElapsed / duration, 1);
+          const easeInOutQuad =
+            progress < 0.5
+              ? 2 * progress * progress
+              : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+          element.scrollTop = start + change * easeInOutQuad;
+
+          if (timeElapsed < duration) {
+            requestAnimationFrame(animateScroll);
+          }
+        }
+
+        requestAnimationFrame(animateScroll);
+      }
+
       $(document).on("click", ".size-btn--panel", function () {
         // 移除所有按钮的 'active' 类
         $(this).addClass("size-btn--panel");
@@ -2520,12 +2546,17 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         //   behavior: "smooth",
         //   block: "end",
         // });
-        $("#info-content.modal-body").animate(
-          {
-            scrollTop: 0,
-          },
-          500
+
+        // $("#info-content.modal-body").animate(
+        //   {
+        //     scrollTop: 0,
+        //   },
+        //   500
+        // );
+        const contentElement = document.querySelector(
+          "#info-content.modal-body"
         );
+        smoothScroll(contentElement, 0, 500);
         // var sizeGuide = $(".container").html();
         // $(".modal-body").html(sizeGuide);
       });
