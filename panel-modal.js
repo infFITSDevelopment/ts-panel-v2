@@ -1,4 +1,5 @@
 ;(function ($) {
+  var BRAND = "INFS";
   // 檢查是否為觸控設備
   var isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
@@ -1286,7 +1287,9 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
         $(".inf-panel-container").show();
       });
-    getPanelInfo();
+    // getPanelInfo();
+    // Call SizeAI
+    api_Products();
   });
   window.isScrolling = 0;
   document
@@ -1362,20 +1365,77 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       panelOffcanvasBottom.css("height", "calc(90lvh - 10px)");
     }
   }
+  function api_Products() {
+    var Gender_ClothID;
+    var dataUrl = "https://api.inffits.com/gpi/model/";
+    var Payload = {
+      Brand: BRAND,
+      url: decodeURI(document.location.href).split("?")[0],
+      CONFIG: "on",
+    };
 
+    $.ajax({
+      url: dataUrl,
+      method: "POST",
+      dataType: "text",
+      data: JSON.stringify(Payload),
+      async: true,
+      success: (res) => {
+        console.log(res);
+        var Results = JSON.parse(res);
+        Gender_ClothID = Results["Gender_ClothID"];
+
+        //%%%%%%%Size AI Toggle%%%%%%%%//
+        if (document.querySelector(".quantity-wrapper") !== null) {
+          var t1 = document.querySelector(".quantity-wrapper"); //
+        } else if (document.querySelector(".quantity") !== null) {
+          var t1 = document.querySelector(".quantity"); //
+        }
+
+        if (t1 !== null) {
+          t1.insertAdjacentHTML(
+            "beforebegin",
+            '<div id="infFITS_size" type="button" style="font-size:14px;font-weight: 400;font-family: Noto Sans TC,sans-serif;cursor: pointer;display: block;position: relative;letter-spacing: .1rem;opacity: 1;-webkit-animation: fadeIn_wrapper 1s 0.4s ease forwards;animation: fadeIn_wrapper 1s 0.4s ease forwards;padding: 8px 0;margin: 16px 0; "><div style="color:black;border-radius:2px; border: 1px solid rgb(50,50,50);padding: 10px;font-size: 12px;position: relative; font-family: Noto Sans TC,sans-serif;text-align: center;display: flex;justify-content: center;align-items: center;"><span style=""><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" class="eva eva-arrow-forward-outline" fill="black"><g data-name="Layer 2"><g data-name="arrow-forward"><rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0"></rect><path d="M5 13h11.86l-3.63 4.36a1 1 0 0 0 1.54 1.28l5-6a1.19 1.19 0 0 0 .09-.15c0-.05.05-.08.07-.13A1 1 0 0 0 20 12a1 1 0 0 0-.07-.36c0-.05-.05-.08-.07-.13a1.19 1.19 0 0 0-.09-.15l-5-6A1 1 0 0 0 14 5a1 1 0 0 0-.64.23 1 1 0 0 0-.13 1.41L16.86 11H5a1 1 0 0 0 0 2z"></path></g></g></svg></span><span">&nbsp; 開啟 「 AI 智能 快速選擇尺寸」</span></div></div>'
+          );
+          // t1.insertAdjacentHTML("beforebegin",`<div id="infFITS_sizefast" style="/* width: 100%; font-size:14px;*/font-weight: 600;font-family: Noto Sans TC,sans-serif;cursor: pointer;display: block;position: relative;padding: 10px 0;letter-spacing: .1rem;margin-bottom:24px;opacity: 0;-webkit-animation: fadeIn_wrapper 1s 0.4s ease forwards; animation: fadeIn_wrapper 1s 0.4s ease forwards;"><div style="position: absolute;right: -6px;border: 0;opacity: 0.5;bottom:-20px"><img src="https://inffits.com/webDesign/HTML/img/infFITS_Logo_2019_center.png" height="30px"></div><div id="infFITS_sizefast_wrapper"><div class="wrapper-flex"><div class="inf_sf-container"><div class="inf_sf-maintext"></div><div class="inf_sf-main"><div id="loader"><img src="https://myinffits.com/images/inffits_f_black.png" height="15px"><div class="cssload-speeding-wheel"></div></div><div class="inf_sf-section"><div class="inf_sf-section-block active"><span id="front_top_size"></span>&nbsp;<span class='front_per active' id="front_top_per" style="font-size: 12px;font-weight: 300;"></span><img src="https://inffits.com/webDesign/HTML/img/002-checked-symbol.png" width="10px" height="10px" style="position: absolute; right: 3px; top: 3px; display: block;"></div></div><div class="inf_sf-section"><div class="inf_sf-section-block"><span id="front_sec_size"></span>&nbsp;<span class="front_per" style="font-size: 12px;font-weight: 300;" id="front_sec_per"></span><img src="https://inffits.com/webDesign/HTML/img/002-checked-symbol.png" width="10px" height="10px" style="position: absolute; right: 3px; top: 3px; display: none;"></div></div></div></div><div class="logo-img-container"><div class="logo-img"></div></div><div style="/* top: -3px; */position: relative;/* display: none; */line-height: 45px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.19 15.56" style="fill:none;stroke:#000000;stroke-width:2px;height: 10px;position: absolute;top: 40%;right: 0;"><path d="m.71.71l7.07,7.07L.71,14.85"></path></svg></div></div></div></div>`)
+          $("#infFITS_size").on("pointerdown", function () {
+            $(".panelOffcanvas")
+              .removeClass("slide-out")
+              .addClass("slide-in")
+              .show();
+            $("#svgContainerPanel").show();
+            // $(".size-btn--panel")[0].click();
+            if (window.innerWidth < 768) {
+              $(".panelOffcanvas-backdrop").addClass("show");
+              document.body.style.overflow = "hidden";
+            }
+            $(".trigger-icon--shirt").hide();
+          });
+        }
+        //%%%%%%%%Size AI Toggle%%%%%%%% END //
+
+        //Get Panel
+        getPanelInfo(Gender_ClothID);
+        //Get Panel END
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
   /* 取得資料 */
-  function getPanelInfo() {
-    var Gender_ClothID__panel = "M&INFS_20240507MT2749&U";
-    var ClothID_sizeinfo__panel = "INFS_20240507MT2749";
-    var Brand__panel = "INFS";
+  function getPanelInfo(Gender_ClothID) {
+    var Gender_ClothID__panel = Gender_ClothID
+    var ClothID_sizeinfo__panel = Gender_ClothID__panel.split('&')[1];
+    var Brand__panel = Gender_ClothID__panel.split('&')[1].split('_')[0];
+
     var dataUrlPanel =
       "https://etpbgcktrk.execute-api.ap-northeast-1.amazonaws.com/v0/model";
     $.ajax({
       url: dataUrlPanel,
       method: "GET",
       dataType: "text",
-      data: "ClothID=" + ClothID_sizeinfo__panel + "&Brand=" + Brand__panel,
-      crossDomain: true,
+      data: "ClothID=" + ClothID_sizeinfo__panel + "&Brand=" + Brand__panel,      crossDomain: true,
       async: true,
       success: (res) => {
         console.log("res", JSON.parse(res));
@@ -1490,7 +1550,6 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }, 500);
   });
 
-
   $(".btn-close--intro").on(eventType, function () {
     $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
     $("#panelTagBtn.trigger-icon--shirt").fadeIn();
@@ -1574,14 +1633,18 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         }
       }
       if ($target.attr("id").includes("filterInfoCollapse")) {
-        const filterInfoCollapse = document.querySelector("#filterInfoCollapse");
+        const filterInfoCollapse = document.querySelector(
+          "#filterInfoCollapse"
+        );
         filterInfoCollapse.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
         });
       }
       if ($target.attr("id").includes("attributeInfoCollapse")) {
-        const attributeInfoCollapse = document.querySelector("#attributeInfoCollapse");
+        const attributeInfoCollapse = document.querySelector(
+          "#attributeInfoCollapse"
+        );
         attributeInfoCollapse.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
@@ -2452,11 +2515,17 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           $("#svgContainerPanel").find("text").hide().fadeIn();
           console.log(output_svg, "!!!!!!!!!!!!!!!!!!");
         }
-        const sizeInfoCollapse = document.querySelector("#sizeInfoCollapse");
-        sizeInfoCollapse.scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-        });
+        // const sizeInfoCollapse = document.querySelector("#sizeInfoCollapse");
+        // sizeInfoCollapse.scrollIntoView({
+        //   behavior: "smooth",
+        //   block: "end",
+        // });
+        $("#info-content.modal-body").animate(
+          {
+            scrollTop: 0,
+          },
+          500
+        );
         // var sizeGuide = $(".container").html();
         // $(".modal-body").html(sizeGuide);
       });
