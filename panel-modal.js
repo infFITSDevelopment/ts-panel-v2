@@ -1243,7 +1243,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
                   "
                 >
                   <iframe
-                    id="inffits_tryon_window"
+                    id="inffits_ctryon_window inffits_tryon_window"
                     style="
                       width: 100%;
                       height: 100%;
