@@ -46,19 +46,7 @@
   --light-background-color: rgba(245, 245, 245, 1);
   --light-primary-color: rgba(255, 255, 255, 0.5);
 }
-@font-face
-    font-family: custom-sans-serif
-    src: local("Heiti TC"), local("微軟正黑體"), local("Microsoft JhengHei")
-    unicode-range: U+4E00-9FFF
 
-@font-face
-    font-family: custom-sans-serif
-    src: local(Helvetica), local(Segoe UI)
-    unicode-range: U+00-024F
-
-.custom-sans-serif{
-    font-family: custom-sans-serif
-}
 .inf-panel-container {
   display: none;
 }
@@ -1263,8 +1251,8 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       </div>
     </div>
   `;
-  document.body.insertAdjacentHTML("afterbegin", panelTemplate);
   $(function () {
+
     console.log("DOM is ready");
     // Fetch the Bootstrap CSS from CDN
     fetch(
@@ -1287,10 +1275,11 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
         // Inject the scoped CSS into the page
         document.getElementById("bootstrap-scoped").textContent = scopedCSS;
       });
+    document.body.insertAdjacentHTML("afterbegin", panelTemplate);
+
     // getPanelInfo();
     // Call SizeAI
     api_Products();
-  });
   window.isScrolling = 0;
   document
     .querySelector("#modalSizeInfo")
@@ -2848,4 +2837,6 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }
     button.classList.add("active");
   };
+});
+
 })(jQuery);
