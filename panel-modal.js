@@ -50,6 +50,9 @@
 .inf-panel-container {
   display: none;
 }
+#panelOffcanvasBottomPanel{
+  display: none;
+}
 
 /* modal trigger button */
 .trigger-icon--text{
