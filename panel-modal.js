@@ -47,13 +47,6 @@
   --light-primary-color: rgba(255, 255, 255, 0.5);
 }
 
-.inf-panel-container {
-  display: none;
-}
-#panelOffcanvasBottomPanel{
-  display: none;
-}
-
 /* modal trigger button */
 .trigger-icon--text{
   box-sizing: border-box;
@@ -968,7 +961,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
   // 添加 html template
   var panelTemplate = `
-<div id="panelTagBtn" class="trigger-icon--shirt" style="display:none">
+<div id="panelTagBtn" class="trigger-icon--shirt" style="display:none;">
 <svg xmlns="http://www.w3.org/2000/svg" style="box-sizing:border-box" width="20" height="20" viewBox="0 0 20 20" fill="none">
   <g id="svg-shirt" opacity="0.9">
     <path d="M10.0001 3.75C11.2923 3.75 12.3716 2.74297 12.5001 1.48438C12.5118 1.36719 12.3829 1.25 12.2657 1.25C12.2024 1.25006 12.1396 1.26199 12.0806 1.28516C12.0728 1.28828 11.2564 1.60156 10.0001 1.60156C8.74385 1.60156 7.92588 1.28906 7.91963 1.28516C7.85306 1.262 7.78309 1.25011 7.7126 1.25H7.71026C7.68106 1.25155 7.65245 1.25884 7.62607 1.27147C7.59969 1.28409 7.57606 1.3018 7.55654 1.32357C7.53702 1.34534 7.52198 1.37076 7.5123 1.39835C7.50261 1.42594 7.49847 1.45518 7.5001 1.48438C7.63096 2.74063 8.71104 3.75 10.0001 3.75Z" fill="#F3F3EF"/>
@@ -980,8 +973,8 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   智能尺寸
 </span>
 </div>
-      <div class="panelOffcanvas-backdrop"></div>
-      <div class="inf-panel-container relative">
+      <div class="panelOffcanvas-backdrop" style="display: none;"></div>
+      <div class="inf-panel-container relative" style="display: none;">
       <div class="relative">
         <!-- mobile bottom sheet -->
         <button
