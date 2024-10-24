@@ -997,6 +997,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           class="panelOffcanvas panelOffcanvas-bottom panelOffcanvas-end main-modal"
           tabindex="-1"
           id="panelOffcanvasBottomPanel"
+          style="display: none;"
         >
           <div
             class="btn-close-container"
@@ -1607,12 +1608,12 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   }
 
   $("#panelTagBtn.trigger-icon--shirt").on("click", function () {
-    $(".inf-panel-container").show();
     $(".panelOffcanvas").removeClass("slide-out").addClass("slide-in").show();
     if (window.innerWidth < 768) {
       $(".panelOffcanvas-backdrop").addClass("show");
       document.body.style.overflow = "hidden";
     }
+    $(".inf-panel-container").show();
     $("#panelTagBtn.trigger-icon--shirt").hide();
   });
   $(".btn-close--panel").on(eventType, function () {
