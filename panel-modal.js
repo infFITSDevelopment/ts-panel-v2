@@ -78,9 +78,6 @@
   overflow-wrap: break-word;
 }
 #panelTagBtn.trigger-icon--shirt{
-  display: none;
-}
-#panelTagBtn.trigger-icon--shirt.show{
 position: fixed; right: 0px; top: calc(50vh - 88.5px);
 display: flex;
 padding: 11px 10px;
@@ -714,7 +711,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 @media screen and (min-width: 768px){
 #intro-content {
   height: 95vh;
-  border-radius: 28px;
+  // border-radius: 28px;
 }
 }
 #intro-content #intro-bg{
@@ -980,7 +977,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
   // 添加 html template
   var panelTemplate = `
-<div id="panelTagBtn" class="trigger-icon--shirt">
+<div id="panelTagBtn" class="trigger-icon--shirt" style="display:none">
 <svg xmlns="http://www.w3.org/2000/svg" style="box-sizing:border-box" width="20" height="20" viewBox="0 0 20 20" fill="none">
   <g id="svg-shirt" opacity="0.9">
     <path d="M10.0001 3.75C11.2923 3.75 12.3716 2.74297 12.5001 1.48438C12.5118 1.36719 12.3829 1.25 12.2657 1.25C12.2024 1.25006 12.1396 1.26199 12.0806 1.28516C12.0728 1.28828 11.2564 1.60156 10.0001 1.60156C8.74385 1.60156 7.92588 1.28906 7.91963 1.28516C7.85306 1.262 7.78309 1.25011 7.7126 1.25H7.71026C7.68106 1.25155 7.65245 1.25884 7.62607 1.27147C7.59969 1.28409 7.57606 1.3018 7.55654 1.32357C7.53702 1.34534 7.52198 1.37076 7.5123 1.39835C7.50261 1.42594 7.49847 1.45518 7.5001 1.48438C7.63096 2.74063 8.71104 3.75 10.0001 3.75Z" fill="#F3F3EF"/>
@@ -989,7 +986,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   </g>
 </svg>
 <span class="trigger-icon--text">
-  智慧尺寸
+  智能尺寸
 </span>
 </div>
       <div class="panelOffcanvas-backdrop"></div>
@@ -1078,12 +1075,12 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
           </div>
                 <div id="intro-bg"></div>
                 <div id="intro-section">
-                  <div class="intro-tag">智慧尺寸</div>
+                  <div class="intro-tag">智能尺寸</div>
                   <div class="intro-title">使用 <span class="en" lang="en">infFITS AI</span> 找尋合適的尺寸，智慧精準購物。</div>
                   <div class="intro-desc">全面了解商品特徵，選取最佳尺寸。</div>
                 </div>
                  <div id="intro-footer">
-                    <button class="intro-btn intro-btn--secondary">開啟商品亮點</button>
+                    <button class="intro-btn intro-btn--secondary">立即了解商品</button>
                     <button class="intro-btn intro-btn--primary">找尋合適尺寸</button>
                   </div>
             </div>
@@ -1289,8 +1286,6 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
         // Inject the scoped CSS into the page
         document.getElementById("bootstrap-scoped").textContent = scopedCSS;
-
-        // $(".inf-panel-container").show();
       });
     // getPanelInfo();
     // Call SizeAI
@@ -1444,8 +1439,6 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
       crossDomain: true,
       async: true,
       success: (res) => {
-        $("#panelTagBtn.trigger-icon--shirt").addClass("show")
-        $(".inf-panel-container").show();
         console.log("res", JSON.parse(res));
         response = JSON.parse(res);
 
@@ -1556,6 +1549,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
 
         $("#AIbtn").click();
         showIntroPanel();
+        $("#panelTagBtn").show()
       },
       error: (err) => {
         console.log(err);
@@ -1621,6 +1615,7 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
   }
 
   $("#panelTagBtn.trigger-icon--shirt").on("click", function () {
+    $(".inf-panel-container").show();
     $(".panelOffcanvas").removeClass("slide-out").addClass("slide-in").show();
     if (window.innerWidth < 768) {
       $(".panelOffcanvas-backdrop").addClass("show");
