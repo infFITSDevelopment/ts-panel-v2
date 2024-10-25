@@ -1609,6 +1609,18 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     $(".inf-panel-container").show();
     $("#panelTagBtn.trigger-icon--shirt").hide();
   });
+  $(".panelOffcanvas-backdrop,show").on(eventType, function () {
+    $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
+    $("#panelTagBtn.trigger-icon--shirt").fadeIn();
+    if (window.innerWidth < 768) {
+      $(".panelOffcanvas-backdrop").removeClass("show");
+      document.body.style.overflow = "";
+    }
+    // 在動畫結束後隱藏元素
+    setTimeout(function () {
+      $(".panelOffcanvas").hide();
+    }, 500);
+  });
   $(".btn-close--panel").on(eventType, function () {
     $(".panelOffcanvas").removeClass("slide-in").addClass("slide-out");
     $("#panelTagBtn.trigger-icon--shirt").fadeIn();
