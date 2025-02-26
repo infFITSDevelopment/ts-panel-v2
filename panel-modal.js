@@ -1352,11 +1352,12 @@ box-shadow: 0px 0.5px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 20px 0px rgba(0, 0, 0
     }
   }
   function api_Products() {
+    var tsUrl = document.location.href.includes("showroom")?'https://infshop.shoplineapp.com/products/商品連結2-1-9':document.location.href;
     var Gender_ClothID;
     var dataUrl = "https://api.inffits.com/gpi/model/";
     var Payload = {
       Brand: BRAND,
-      url: decodeURI(document.location.href).split("?")[0],
+      url: decodeURI(tsUrl).split("?")[0],
       CONFIG: "on",
     };
 
